@@ -1,0 +1,46 @@
+name: Main Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      run-test:
+        description: specify if test has to be run
+        required: true
+        default: 'true'
+      create-packages:
+        description: specify if packages have to be built
+        required: true
+        default: 'true'
+  pull_request:
+  push:
+    branches:
+      - master
+    paths:
+      - '*'
+      - '!/Documentation/*' # Don't run workflow when files are only in the /Documentation directory
+
+jobs:
+  set-variables:
+   runs-on: ubuntu-latest
+   outputs:
+      DO_TEST: ${{ steps.DO_TEST.outputs.value }}
+      DO_PACK: ${{ steps.DO_PACK.outputs.value }}
+   steps:
+   - uses: haya14busa/action-cond@v1
+     id: DO_TEST
+     with:
+       cond: ${{ github.event_name == 'workflow_dispatch' }}
+       if_true: ${{ github.event.inputs.run-test }}
+       if_false: 'true'
+   - uses: haya14busa/action-cond@v1
+     id: DO_PACK
+     with:
+      cond: ${{ github.event_name == 'workflow_dispatch' }}
+      if_true: ${{ github.event.inputs.create-packages }}
+      if_false: 'true'
+      
+      
+      
+      
+      
+      

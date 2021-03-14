@@ -74,9 +74,9 @@ jobs:
       run: |
          if ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.single-runner == 'true' }}
          then
-            echo "::set-output name=matrix::{\"os\":[\"ubuntu-latest\",\"windows-latest\",\"macos-latest\"]}"
+            echo "::set-output name=matrix::\"{\"os\":[\"ubuntu-latest\",\"windows-latest\",\"macos-latest\"]}"
          else
-            echo "::set-output name=matrix::{\"os\":[\"ubuntu-latest\"]}"
+            echo "::set-output name=matrix::\"{\"os\":[\"ubuntu-latest\"]}"
          fi
 
     - name: Dump Variables # for debug purpose

@@ -83,6 +83,7 @@ jobs:
       run: |
          echo "DO_TEST = ${{ steps.DO_TEST.outputs.value }}"
          echo "DO_PACK = ${{ steps.DO_PACK.outputs.value }}"
+         echo "RUNNERS = ${{ steps.RUNNERS.outputs.matrix }}"
 
   build:
     needs: set_variables

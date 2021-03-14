@@ -84,9 +84,6 @@ jobs:
          echo "DO_TEST = ${{ steps.DO_TEST.outputs.value }}"
          echo "DO_PACK = ${{ steps.DO_PACK.outputs.value }}"
 
-         [ ubuntu-latest, windows-latest, macos-latest ]
-
-
   build:
     needs: set_variables
     runs-on: ${{ matrix.os }}

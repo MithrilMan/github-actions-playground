@@ -89,7 +89,7 @@ jobs:
     needs: set_variables
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.set_variables.outputs.RUNNERS)}}
 
     steps:
     - name: DO_TEST Check

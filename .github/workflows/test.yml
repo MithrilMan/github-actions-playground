@@ -23,8 +23,8 @@ jobs:
   set_variables:
     runs-on: 'ubuntu-latest'
     env:
-      DEFAULT_DO_TEST: 'false'
-      DEFAULT_DO_PACK: 'false'
+      DEFAULT_DO_TEST: 'true'
+      DEFAULT_DO_PACK: 'true'
     outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
       DO_PACK: ${{ steps.DO_PACK.outputs.value }}

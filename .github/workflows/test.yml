@@ -3,12 +3,20 @@ name: Main Build
 on:
   workflow_dispatch:
     inputs:
+      single-runner:
+        description: specify if it has to run on a single runner only (ubuntu-latest)
+        required: true
+        default: 'true'
       run-test:
         description: specify if test has to be run
         required: true
         default: 'true'
       create-packages:
         description: specify if packages have to be built
+        required: true
+        default: 'true'
+      publish-prerelease:
+        description: specify if nuget packages has to be published on github feed
         required: true
         default: 'true'
   pull_request:
@@ -20,6 +28,20 @@ on:
       - '*'
       - '!/Documentation/*' # Don't run workflow when files are only in the /Documentation directory
 
+
+env:
+  # Stop wasting time caching packages
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending usage data to Microsoft
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  # GitHub Packages Feed settings
+  GITHUB_FEED: https://nuget.pkg.github.com/MithrilMan/index.json/
+  GITHUB_USER: MithrilMan
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Official NuGet Feed settings
+  NUGET_FEED: https://api.nuget.org/v3/index.json
+  NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+
 jobs:
   set_variables:
     runs-on: 'ubuntu-latest'
@@ -29,6 +51,7 @@ jobs:
     outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
       DO_PACK: ${{ steps.DO_PACK.outputs.value }}
+      RUNNERS: ${{ steps.RUNNERS.outputs.matrix }}
     steps:
     - name: Set DO_TEST
       uses: haya14busa/action-cond@v1
@@ -37,6 +60,7 @@ jobs:
         cond: ${{ github.event_name == 'workflow_dispatch' }}
         if_true: ${{ github.event.inputs.run-test }}
         if_false: ${{ env.DEFAULT_DO_TEST }}
+
     - name: Set DO_PACK
       uses: haya14busa/action-cond@v1
       id: DO_PACK
@@ -44,17 +68,30 @@ jobs:
         cond: ${{ github.event_name == 'workflow_dispatch' }}
         if_true: ${{ github.event.inputs.create-packages }}
         if_false: ${{ env.DEFAULT_DO_PACK }}
+
+    - name: Set Runners OS Matrix
+      id: RUNNERS
+      run: |
+         if ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.single-runner == 'true' }}
+         then
+            echo "::set-output name=matrix::{\"os\":[\"ubuntu-latest\",\"windows-latest\",\"macos-latest\"]}"
+         else
+            echo "::set-output name=matrix::{\"os\":[\"ubuntu-latest\"]}"
+         fi
+
     - name: Dump Variables # for debug purpose
       run: |
          echo "DO_TEST = ${{ steps.DO_TEST.outputs.value }}"
          echo "DO_PACK = ${{ steps.DO_PACK.outputs.value }}"
 
+         [ ubuntu-latest, windows-latest, macos-latest ]
+
+
   build:
     needs: set_variables
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+      matrix: ${{fromJSON(needs.set_variables.outputs.matrix)}}
 
     steps:
     - name: DO_TEST Check

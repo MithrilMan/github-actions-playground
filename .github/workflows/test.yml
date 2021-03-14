@@ -18,10 +18,12 @@ on:
     paths:
       - '*'
       - '!/Documentation/*' # Don't run workflow when files are only in the /Documentation directory
-
+env:
+  MAIN_BUILD: ubuntu-latest
+  
 jobs:
   set_variables:
-   runs-on: ubuntu-latest
+   runs-on: env.MAIN_BUILD
    outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
       DO_PACK: ${{ steps.DO_PACK.outputs.value }}

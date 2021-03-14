@@ -20,7 +20,7 @@ on:
       - '!/Documentation/*' # Don't run workflow when files are only in the /Documentation directory
 
 jobs:
-  set-variables:
+  set_variables:
    runs-on: ubuntu-latest
    outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
@@ -40,7 +40,7 @@ jobs:
       if_false: 'true'
       
   build:
-    needs: [set-variables]
+    needs: set_variables
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -48,11 +48,11 @@ jobs:
 
     steps:
     - name: DO_TEST Check
-      if: needs[set-variables].outputs.DO_TEST && matrix.os == 'ubuntu-latest'
+      if: needs.set_variables.outputs.DO_TEST && matrix.os == 'ubuntu-latest'
       run: echo "DO_TEST"
       
     - name: DO_PACK Check
-      if: needs[set-variables].outputs.DO_PACK && matrix.os == 'ubuntu-latest'
+      if: needs.set_variables.outputs.DO_PACK && matrix.os == 'ubuntu-latest'
       run: echo "DO_PACK"
       
       

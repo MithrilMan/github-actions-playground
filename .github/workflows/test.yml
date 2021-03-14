@@ -72,7 +72,7 @@ jobs:
     - name: Set Runners OS Matrix
       id: RUNNERS
       run: |
-         if ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.single-runner == 'true' }}
+         if [[ ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.single-runner == 'true' }} ]]
          then
             echo "::set-output name=matrix::\"{\"os\":[\"ubuntu-latest\",\"windows-latest\",\"macos-latest\"]}"
          else
@@ -81,6 +81,7 @@ jobs:
 
     - name: Dump Variables # for debug purpose
       run: |
+         echo ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.single-runner == 'true' }}
          echo "DO_TEST = ${{ steps.DO_TEST.outputs.value }}"
          echo "DO_PACK = ${{ steps.DO_PACK.outputs.value }}"
 

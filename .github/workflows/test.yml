@@ -18,29 +18,30 @@ on:
     paths:
       - '*'
       - '!/Documentation/*' # Don't run workflow when files are only in the /Documentation directory
-env:
-  MAIN_BUILD: ubuntu-latest
   
 jobs:
   set_variables:
-   runs-on: ${{ env.MAIN_BUILD }}
-   outputs:
+    runs-on: 'ubuntu-latest'
+    env:
+      DEFAULT_DO_TEST: 'true'
+      DEFAULT_DO_PACK: 'true'
+    outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
       DO_PACK: ${{ steps.DO_PACK.outputs.value }}
-   steps:
-   - uses: haya14busa/action-cond@v1
-     id: DO_TEST
-     with:
-       cond: ${{ github.event_name == 'workflow_dispatch' }}
-       if_true: ${{ github.event.inputs.run-test }}
-       if_false: 'true'
-   - uses: haya14busa/action-cond@v1
-     id: DO_PACK
-     with:
-      cond: ${{ github.event_name == 'workflow_dispatch' }}
-      if_true: ${{ github.event.inputs.create-packages }}
-      if_false: 'true'
-      
+    steps:
+    - uses: haya14busa/action-cond@v1
+      id: DO_TEST
+      with:
+        cond: ${{ github.event_name == 'workflow_dispatch' }}
+        if_true: ${{ github.event.inputs.run-test }}
+        if_false: ${{ env.DEFAULT_DO_TEST }}
+    - uses: haya14busa/action-cond@v1
+      id: DO_PACK
+      with:
+        cond: ${{ github.event_name == 'workflow_dispatch' }}
+        if_true: ${{ env.DEFAULT_DO_PACK }}
+        if_false: 'true'
+
   build:
     needs: set_variables
     runs-on: ${{ matrix.os }}

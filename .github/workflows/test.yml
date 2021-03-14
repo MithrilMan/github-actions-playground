@@ -12,6 +12,7 @@ on:
         required: true
         default: 'true'
   pull_request:
+  issues:
   push:
     branches:
       - master

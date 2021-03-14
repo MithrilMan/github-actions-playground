@@ -48,11 +48,11 @@ jobs:
 
     steps:
     - name: DO_TEST Check
-      if: needs.set_variables.outputs.DO_TEST && matrix.os == 'ubuntu-latest'
+      if: needs.set_variables.outputs.DO_TEST == 'true' && matrix.os == 'ubuntu-latest'
       run: echo "DO_TEST"
       
     - name: DO_PACK Check
-      if: needs.set_variables.outputs.DO_PACK && matrix.os == 'ubuntu-latest'
+      if: needs.set_variables.outputs.DO_PACK == 'true' && matrix.os == 'ubuntu-latest'
       run: echo "DO_PACK"
       
       

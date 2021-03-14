@@ -23,7 +23,7 @@ env:
   
 jobs:
   set_variables:
-   runs-on: env.MAIN_BUILD
+   runs-on: ${{ env.MAIN_BUILD }}
    outputs:
       DO_TEST: ${{ steps.DO_TEST.outputs.value }}
       DO_PACK: ${{ steps.DO_PACK.outputs.value }}

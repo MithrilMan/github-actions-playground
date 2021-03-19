@@ -1,0 +1,16 @@
+site_name: Mithril playground
+site_url: https://github.com/MithrilMan/github-actions-playground/
+repo_url: https://github.com/MithrilMan/github-actions-playground/
+site_author: Mithril Man
+copyright: Mithril Man 2021
+nav:
+    - 'index.md'
+    - 'about.md'
+    - Issue Tracker': 'https://github.com/MithrilMan/github-actions-playground/issues'
+    
+theme:
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - csharp
+docs_dir: ./

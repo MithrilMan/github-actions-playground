@@ -3,8 +3,8 @@
 **Table of Contents**
 
 - [my test](#my-test)
-  - [test2](#test2)
-    - [test3](#test3)
+- [test2](#test2)
+  - [test3](#test3)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -1,25 +1,76 @@
 site_name: Mithril playground
-site_url: https://github.com/MithrilMan/github-actions-playground/
-repo_url: https://github.com/MithrilMan/github-actions-playground/
-site_author: Mithril Man
-copyright: Mithril Man 2021
-nav:
-    - Home: 'readme.md'
-    - 'Bitcoin Shard':
-      - Overview: 'bitcoin-shard/readme.md'
-      - Network: 'bitcoin-shard/network.md'
-    - Issue Tracker: 'https://github.com/MithrilMan/github-actions-playground/issues'
+site_url: https://mithrilman.github.io/github-actions-playground
+repo_name: github-actions-playground
+repo_url: https://github.com/MithrilMan/github-actions-playground
+edit_uri: ""
 
-theme:
-    name: readthedocs
-    highlightjs: true
-    hljs_languages:
-        - csharp
-docs_dir: docs
-site_dir: ./doc_site
-
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js
   - javascripts/config.js
-extra_css:
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css
+
+copyright: Mithril Man 2021
+
+# change directory names here
+docs_dir: doc
+site_dir: ./doc_site
+
+site_author: Mithril Man
+
+theme:
+    name: material
+
+    icon:
+      repo: fontawesome/brands/github
+
+    features:
+      - navigation.instant
+      - navigation.tabs
+      - navigation.indexes
+      - navigation.top
+      - header.autohide
+      #- toc.integrate
+
+    palette:
+      # Light mode
+      - media: "(prefers-color-scheme: light)"
+        scheme: default
+        primary: 'blue grey'
+        accent: 'blue'
+        toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+      # Dark mode
+      - media: "(prefers-color-scheme: dark)"
+        scheme: slate
+        primary: blue
+        accent: blue
+        toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+
+markdown_extensions:
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - git-revision-date
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/MithrilMan/github-actions-playground
+  generator: false
+#  version:
+#    provider: mike
+
+nav:
+  - Home: 'readme.md'
+  - 'Bitcoin Shard':
+    - 'bitcoin-shard/readme.md'
+    - Network: 'bitcoin-shard/network.md'
+  - Issue Tracker: 'https://github.com/MithrilMan/github-actions-playground/issues'

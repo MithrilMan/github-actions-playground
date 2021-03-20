@@ -1,0 +1,21 @@
+name: MKDOCS
+on:
+  workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build docs
+        uses: athackst/mkdocs-simple-plugin
+        with:
+          # (optional) Specify branch
+          publish_branch: gh-pages
+          # (optional) The URL of the repository the docs should point to
+          repo_url: https://github.com/mithrilman/github-actions-playground
+          # (optional) The name of the site
+          site_name: mithrilman/github-actions-playground
+          # (optional) The URL of the site
+          site_url: https://mithrilman.github.io/github-actions-playground/

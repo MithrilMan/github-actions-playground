@@ -1,4 +1,3 @@
-[TOC]
 # Network Protocol
 
 The Bitcoin network protocol is a TCP protocol that serializes messages starting from a special 4 bytes constant data called *Magic bytes*, followed by 12 bytes representing the *command name*, 4 bytes representing the *payload size* and 4 bytes with the checksum of the payload.
@@ -118,7 +117,7 @@ services.AddSingleton<IServerPeerConnectionGuard, InitialBlockDownloadStateGuard
 
 This allow the flexibility of having custom guard rule simply by implementing a rule and register in the DI container, any required service will be injected automatically; of course if it relies on a custom service not already available in my implementation, that service has to be registered too.
 
->📝 NOTE
+> 📝 NOTE
 > ---
 > These classes have to be registered as singleton and therefor must be stateless.
 

@@ -6,7 +6,7 @@ copyright: Mithril Man 2021
 nav:
     - Home: 'readme.md'
     - 'Bitcoin Shard':
-      - Overview: 'bitcoin-shard/network.md'
+      - Overview: 'bitcoin-shard/readme.md'
       - Network: 'bitcoin-shard/network.md'
     - Issue Tracker: 'https://github.com/MithrilMan/github-actions-playground/issues'
 

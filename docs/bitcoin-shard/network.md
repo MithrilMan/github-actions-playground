@@ -33,7 +33,7 @@ The peer context creation is handled by the core Mithril Shard network implement
 
 It leverages the generic class `PeerContextFactory<>` and its implementation is bare bone, no need to override anything.
 
-```c#
+```csharp
 public class PeerContextFactory<TPeerContext> : IPeerContextFactory where TPeerContext : IPeerContext
 ```
 
@@ -117,8 +117,7 @@ services.AddSingleton<IServerPeerConnectionGuard, InitialBlockDownloadStateGuard
 
 This allow the flexibility of having custom guard rule simply by implementing a rule and register in the DI container, any required service will be injected automatically; of course if it relies on a custom service not already available in my implementation, that service has to be registered too.
 
-> 📝 NOTE
-> ---
+> 📝 *NOTE*
 > These classes have to be registered as singleton and therefor must be stateless.
 
 Network protocol is implemented through the serialization of classes which implement `INetworkMessage` interface and are decorated with `NetworkMessageAttribute` that works in synergy with an implementation of `INetworkMessageSerializer` to implement network serialization.

@@ -1,3 +1,7 @@
+---
+title: Network implementation
+description: Mithril Shards bitcoin implementation, network implementation
+---
 # Network Protocol
 
 The Bitcoin network protocol is a TCP protocol that serializes messages starting from a special 4 bytes constant data called *Magic bytes*, followed by 12 bytes representing the *command name*, 4 bytes representing the *payload size* and 4 bytes with the checksum of the payload.
@@ -33,7 +37,7 @@ The peer context creation is handled by the core Mithril Shard network implement
 
 It leverages the generic class `PeerContextFactory<>` and its implementation is bare bone, no need to override anything.
 
-```csharp
+```c#
 public class PeerContextFactory<TPeerContext> : IPeerContextFactory where TPeerContext : IPeerContext
 ```
 
@@ -84,7 +88,7 @@ public abstract class ServerPeerConnectionGuardBase : IServerPeerConnectionGuard
 This class implements the plumbing code required to run (and log in case of rule check not passed) the guard rule, so a guard rule implementation has just to focus on its guarding logic.
 A simple example is the `MaxConnectionThresholdGuard` rule that ensure that an incoming transaction doesn't exceed the maximum allowed number of inbound connections:
 
-```c#
+```c# hl_lines="12-20"
 public class MaxConnectionThresholdGuard : ServerPeerConnectionGuardBase
    {
       readonly IConnectivityPeerStats _peerStats;
@@ -117,7 +121,30 @@ services.AddSingleton<IServerPeerConnectionGuard, InitialBlockDownloadStateGuard
 
 This allow the flexibility of having custom guard rule simply by implementing a rule and register in the DI container, any required service will be injected automatically; of course if it relies on a custom service not already available in my implementation, that service has to be registered too.
 
-> 📝 *NOTE*
-> These classes have to be registered as singleton and therefor must be stateless.
+!!! info
+	These classes have to be registered as singleton and therefor must be stateless
 
 Network protocol is implemented through the serialization of classes which implement `INetworkMessage` interface and are decorated with `NetworkMessageAttribute` that works in synergy with an implementation of `INetworkMessageSerializer` to implement network serialization.
+
+## Handshake
+
+Once a connection has been accepted between two nodes, they start exchanging messages in order to handshake and prove each other they are two compatible nodes that can exchange informations.
+
+!!! info
+	Bitcoin protocol doesn't punish nodes that send unknown messages. I think however that a node has to monitor its connected peer activities and punish them if they send too many unknown messages causing our node to waste resources.
+
+Without going too deeper into bitcoin handshake process, the exchanges messages are summarized by this sequence diagram:
+
+```mermaid
+sequenceDiagram
+	participant L as Local
+    participant R as Remote
+    L-->>+R:Connects to
+    L->>+R:Version
+    R->>L:Version
+	R->>L:Verack
+    L->>R:Verack
+```
+
+!!! info
+	Bitcoin protocol doesn't define a specific order for the `Remote` node to send its `Verack` and `Version` message so `Local` node has to account that and accept these messages in any order.

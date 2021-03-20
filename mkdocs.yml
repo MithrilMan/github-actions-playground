@@ -3,20 +3,17 @@ site_url: https://mithrilman.github.io/github-actions-playground
 repo_name: github-actions-playground
 repo_url: https://github.com/MithrilMan/github-actions-playground
 edit_uri: ""
-
-extra_css:
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css
-extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js
-  - javascripts/config.js
-
+site_author: Mithril Man
 copyright: Mithril Man 2021
+
+extra_javascript:
+  - https://unpkg.com/mermaid@8.8.3/dist/mermaid.min.js
+extra_css:
+  - extra_css/custom.css
 
 # change directory names here
 docs_dir: doc
 site_dir: ./doc_site
-
-site_author: Mithril Man
 
 theme:
     name: material
@@ -26,18 +23,20 @@ theme:
 
     features:
       - navigation.instant
-      - navigation.tabs
-      - navigation.indexes
-      - navigation.top
-      - header.autohide
+      #- navigation.sections
+      #- navigation.tabs
+      #- navigation.tabs.sticky # for insiders only
+      - navigation.indexes # for insiders only
+      - navigation.top # for insiders only
+      #- header.autohide
       #- toc.integrate
 
     palette:
       # Light mode
       - media: "(prefers-color-scheme: light)"
         scheme: default
-        primary: 'blue grey'
-        accent: 'blue'
+        primary: blue grey
+        accent: blue
         toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -54,11 +53,28 @@ theme:
 
 markdown_extensions:
   - toc:
-      permalink: true
+      permalink: false
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  #- meta
+  - admonition
+  - pymdownx.highlight:
+      use_pygments: true
+      linenums: true
+      noclasses: false #set to true to enable pygments_style option
+      pygments_style: 'vs'
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
 
 plugins:
   - search
   - git-revision-date
+  #- section-index
 
 extra:
   social:
@@ -69,8 +85,11 @@ extra:
 #    provider: mike
 
 nav:
-  - Home: 'readme.md'
-  - 'Bitcoin Shard':
-    - 'bitcoin-shard/readme.md'
-    - Network: 'bitcoin-shard/network.md'
+  - index.md
+  - Mithril Shards:
+    - bitcoin-shard/index.md
+    - bitcoin-shard/network.md
+  - Bitcoin Shard:
+    - bitcoin-shard/index.md
+    - bitcoin-shard/network.md
   - Issue Tracker: 'https://github.com/MithrilMan/github-actions-playground/issues'

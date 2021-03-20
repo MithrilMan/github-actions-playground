@@ -1,3 +1,7 @@
+---
+title: Overview
+description: Mithril Shards bitcoin implementation overview
+---
 ## Premise
 
 This folder contains technical documentation that helps to understand the choices behind the implementation and design of current project.

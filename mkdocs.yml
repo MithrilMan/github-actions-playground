@@ -4,8 +4,10 @@ repo_url: https://github.com/MithrilMan/github-actions-playground/
 site_author: Mithril Man
 copyright: Mithril Man 2021
 nav:
-    - 'test.md'
-    - 'bitcoin-shard'
+    - Home: 'readme.md'
+    - 'Bitcoin Shard'
+      - Overview: 'bitcoin-shard/network.md'
+      - Network: 'bitcoin-shard/network.md'
     - Issue Tracker: 'https://github.com/MithrilMan/github-actions-playground/issues'
 
 theme:
@@ -15,3 +17,9 @@ theme:
         - csharp
 docs_dir: docs
 site_dir: ./doc_site
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js
+  - javascripts/config.js
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css
